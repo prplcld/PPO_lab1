@@ -1,14 +1,34 @@
 apply plugin: 'com.android.application'
-apply from: "$project.rootDir/tools/script-git-version.gradle"
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:grgit:1.5.0'
+    }
+}
+
+ext {
+    git = org.ajoberstar.grgit.Grgit.open()
+    gitVersionCode = git.tag.list().size()
+    gitVersionName = "${git.describe()}"
+}
+
+task printVersion() {
+    println("Version Name: $gitVersionName")
+    println("Version Code: $gitVersionCode")
+}
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.lab1"
         minSdkVersion 15
-        //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 23
+        targetSdkVersion 29
+        versionCode gitVersionCode
+        versionName gitVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -19,17 +39,7 @@ android {
     }
 }
 
-productFlavors {
-    dev {
-        versionCode gitVersionCodeTime
-        versionName gitVersionName
-    }
 
-    prod {
-        versionCode gitVersionCode
-        versionName gitVersionName
-    }
-}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

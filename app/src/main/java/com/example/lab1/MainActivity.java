@@ -8,14 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView versionName = findViewById(R.id.ver_name);
-        versionName.setText(getVersion());
+
+        TextView textView = findViewById(R.id.textView);
+        textView.setText(getVersion());
     }
 
     public String getVersion(){
