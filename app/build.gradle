@@ -25,8 +25,9 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.lab1"
-        minSdkVersion 15
-        targetSdkVersion 29
+        minSdkVersion 23
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 23
         versionCode gitVersionCode
         versionName gitVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
