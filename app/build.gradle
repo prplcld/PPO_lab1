@@ -12,7 +12,9 @@ buildscript {
 ext {
     git = org.ajoberstar.grgit.Grgit.open()
     gitVersionCode = git.tag.list().size()
-    gitVersionName = "${git.describe()}"
+    gitVersion = "${git.describe()}"
+    gitVersion = gitVersion.replaceAll('-', '.')
+    gitVersionName = gitVersion[0..<gitVersion.lastIndexOf('.')]
 }
 
 task printVersion() {
