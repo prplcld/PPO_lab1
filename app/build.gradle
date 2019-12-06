@@ -13,8 +13,8 @@ ext {
     git = org.ajoberstar.grgit.Grgit.open()
     gitVersionCode = git.tag.list().size()
     gitVersion = "${git.describe()}"
-    gitVersion = gitVersion.replaceAll('-', '.')
-    gitVersionName = gitVersion[0..<gitVersion.lastIndexOf('.')]
+    gitVersion = gitVersion.replaceAll("-\\w{8}", "")
+    gitVersionName = gitVersion.replaceAll('-', '.')
 }
 
 task printVersion() {
