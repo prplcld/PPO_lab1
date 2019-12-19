@@ -11,10 +11,23 @@ buildscript {
 
 ext {
     git = org.ajoberstar.grgit.Grgit.open()
-    gitVersionCode = git.tag.list().size()
+    gitVersionCode = git.log().size()
     gitVersion = "${git.describe()}"
     gitVersion = gitVersion.replaceAll("-\\w{8}", "")
     gitVersionName = gitVersion.replaceAll('-', '.')
+}
+
+def codeVersion(){
+    def versionNames = gitVersionName.replace("v", "").split('\\.')
+    int major = versionNames[0] as Integer
+    int minor = versionNames[1] as Integer
+    if(versionNames.size() == 3){
+        int patch = versionNames[2] as Integer
+        return major * 1000 + minor * 100 + patch
+    }
+    else{
+        return major * 1000 + minor * 100
+    }
 }
 
 task printVersion() {
@@ -30,7 +43,7 @@ android {
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 23
-        versionCode gitVersionCode
+        versionCode codeVersion()
         versionName gitVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
